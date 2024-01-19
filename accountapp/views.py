@@ -1,5 +1,6 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
+from django.urls import reverse
 
 from accountapp.models import HelloWorld
 
@@ -15,5 +16,9 @@ def hello_world(request):
         new_hello_world.text = temp
         new_hello_world.save() # DB에 HelloWorld 객체 저장
 
-        return render(request, 'accountapp/hello_world.html', context={'hello_world_output': new_hello_world})
-    return render(request, 'accountapp/hello_world.html', context={'text': 'GET METHOD!!!'})
+#        hello_world_list = HelloWorld.objects.all()
+#        return render(request, 'accountapp/hello_world.html', context={'hello_world_list': hello_world_list})
+        return HttpResponseRedirect(reverse('accountapp:hello_world'))
+            # account 내 있는 hello world로 재접속하라
+    hello_world_list = HelloWorld.objects.all()
+    return render(request, 'accountapp/hello_world.html', context={'hello_world_list': hello_world_list})
