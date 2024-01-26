@@ -11,6 +11,9 @@
                 <span>login</span>
             </a>
             {% else %}
+            <a href="{% url 'accountapp:detail' pk=user.pk %}">
+                <span>MyPage</span>
+            </a>
             <form action="{% url 'accountapp:logout' %}" method="post">
             {% csrf_token %}
                 <input type="submit" value="logout" />
